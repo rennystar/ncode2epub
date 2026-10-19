@@ -1,7 +1,7 @@
 {
   "name": "ncode2epub",
   "version": "0.1.0",
-  "description": "Convert 小説家になろう's official 縦書きPDF into a vertical EPUB for Kindle",
+  "description": "Read 小説家になろう (syosetu.com) web novels on Kindle, in vertical text with furigana.",
   "license": "MIT",
   "type": "module",
   "bin": {

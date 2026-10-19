@@ -1,10 +1,10 @@
 # Guide
 
-Read the [Disclaimer](DISCLAIMER.md) first.
+Please read the [Disclaimer](DISCLAIMER.md) first.
 
 ## Install
 
-Node.js 20 or newer (tested on 20 and 24).
+You need Node.js 20 or newer. I tested it on 20 and 24.
 
 ```bash
 git clone https://github.com/rennystar/ncode2epub && cd ncode2epub
@@ -18,38 +18,38 @@ npx ncode2epub --help
 npx ncode2epub
 ```
 
-1. Type a title, author, N-code, novel URL or romaji, then pick the novel with ↑↓ and Enter.
-2. The tool shows the novel page link. Open it (⌘-click / Ctrl-click), scroll to the very bottom, and press **縦書きPDF** in the row 「作者マイページ ｜ 縦書きPDF ｜ 情報提供」 under the 「+注意+」 box. If the browser shows the PDF instead of saving it, save it from the viewer.
-3. As soon as that novel's PDF lands in `~/Downloads`, it is converted and `title.epub` is written next to it.
+1. Type a title, author, N-code, novel URL or romaji, and pick the novel with ↑↓ and Enter.
+2. You get a link to the novel page. Open it (⌘-click or Ctrl-click) and scroll to the very bottom. Under the 「+注意+」 box there is a row 「作者マイページ ｜ 縦書きPDF ｜ 情報提供」. Click 「縦書きPDF」 in the middle. If your browser opens the PDF instead of saving it, save it from there.
+3. Once the PDF is in `~/Downloads`, it gets converted and `title.epub` appears next to it.
 
-Esc goes back to search, Ctrl+C quits. The tool never opens the browser or downloads anything by itself.
+Esc takes you back to search, Ctrl+C quits. The tool doesn't open your browser or download anything on its own.
 
 ## Commands
 
 | Command | What it does |
 |---|---|
-| `ncode2epub` | Interactive mode (above) |
-| `ncode2epub search <words>` | List matching novels with their page links |
-| `ncode2epub convert <pdf>` | Convert one downloaded PDF (the EPUB goes next to it) |
-| `ncode2epub watch` | Convert every official PDF that lands in the folder |
+| `ncode2epub` | Interactive mode |
+| `ncode2epub search <words>` | List novels with their page links |
+| `ncode2epub convert <pdf>` | Convert one PDF. The EPUB is saved next to it |
+| `ncode2epub watch` | Convert every official PDF that shows up in the folder |
 
-Options: `--dir <folder>` (default `~/Downloads`), `--lang ja|en|ko` (default: system language).
+Options: `--dir <folder>` (default `~/Downloads`) and `--lang ja|en|ko` (default is your system language).
 
-## Search
+## Search tips
 
-The official API only matches substrings. When a query finds nothing, it is split at spaces and at particles such as 「の」 between kanji, romaji is turned into kana, each piece is searched, and the results are ranked by how many pieces match, then by total points. 「薬屋の独り言」 and 「kusuriya no hitorigoto」 both find 『薬屋のひとりごと』. English (licensed) titles are not in the site's data.
+The site's API only finds exact substrings, so 「薬屋の独り言」 or 「kusuriya no hitorigoto」 return nothing at first. When that happens, the query is split into pieces (at spaces, and at particles like 「の」 between kanji), romaji is turned into kana, and each piece is searched separately. Both examples above end up finding 『薬屋のひとりごと』. English titles of licensed translations aren't in the site's data, so they won't work.
 
-## What the EPUB contains
+## What you get
 
-Vertical writing (right-to-left pages), ruby, a cover drawn from the title and author, author and synopsis metadata, a table of contents by episode, and 前書き/後書き attached to their episode.
+A vertical EPUB that reads right to left, with ruby (furigana), a cover made from the title and author, the author and synopsis in the book info, a table of contents by episode, and 前書き/後書き kept with their episode.
 
-Send it with **Send to Kindle** (web, app or email). Kindle e-readers do not read EPUB copied over USB.
+Send it with Send to Kindle (web, app or email). Kindles can't open an EPUB copied over USB.
 
 ## Known limits
 
-- Illustrations are not in the official PDF; each becomes a 「［挿絵］」 link to its page.
-- Arc (章) titles are not in the PDF either, so the table of contents lists episodes only.
-- Ruby is rebuilt from positions: when a short reading sits on a longer word the base can be off by a character (e.g. 玄人《プロ》 → 玄《プロ》人). About 94% match a Narou.rb build of 『薬屋のひとりごと』.
-- A line of exactly 30 characters may join the next one, because the PDF does not distinguish a line break from wrapping (about 1.5% of lines in the same test).
-- An updated novel needs its whole PDF downloaded again.
-- Layout constants match the PDFs of January 2026; if the site changes its PDF, re-measure the values at the top of `core.js`.
+- The official PDF has no illustrations. Where one was, you get a 「［挿絵］」 link to it.
+- Arc (章) titles aren't in the PDF either, so the table of contents only lists episodes.
+- Ruby is matched by position. When a short reading sits on a longer word, it can land one character off, like 玄《プロ》人 instead of 玄人《プロ》. In 『薬屋のひとりごと』 about 94% matched a Narou.rb build.
+- A line that is exactly 30 characters long can merge with the next one, because the PDF looks the same either way. That was about 1.5% of lines in the same test.
+- When a novel gets new episodes, you download the whole PDF again.
+- The layout values were measured on PDFs from January 2026. If the site changes its PDF, they need measuring again (top of `core.js`).
