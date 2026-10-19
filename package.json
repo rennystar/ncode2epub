@@ -1,0 +1,22 @@
+{
+  "name": "ncode2epub",
+  "version": "0.1.0",
+  "description": "Convert 小説家になろう's official 縦書きPDF into a vertical EPUB for Kindle",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "ncode2epub": "cli.js"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@clack/prompts": "1.8.1",
+    "@napi-rs/canvas": "0.1.100",
+    "fflate": "0.8.3",
+    "pdfjs-dist": "4.10.38"
+  }
+}
