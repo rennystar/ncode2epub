@@ -78,7 +78,7 @@ function watchPdfs(dir, onPdf) {
 // Ctrl+C is handled by the clack spinner, which exits the program.
 function waitForPdf(ncode) {
   return new Promise((resolve) => {
-    const { stdin } = process, s = p.spinner();
+    const { stdin } = process, s = p.spinner({ indicator: 'timer' });   // elapsed time shows it is still waiting
     let done = false;
     const finish = (file) => {
       if (done) return;
@@ -104,8 +104,8 @@ function waitForPdf(ncode) {
 async function interactive() {
   p.updateSettings({ messages: { cancel: t.cancel, error: t.error } });
   p.intro(' ncode2epub — 縦書きPDF → Kindle EPUB ');
-  p.log.info(t.why);                                   // say up front why the PDF is not downloaded for you
   for (;;) {
+    p.log.step(t.stepSearch);
     const query = await p.text({ message: t.query, validate: (v) => (v?.trim() ? undefined : t.query) });
     if (p.isCancel(query)) break;
     const s = p.spinner();
@@ -136,18 +136,19 @@ async function interactive() {
     if (p.isCancel(novel) || novel === 'quit') break;
     if (novel === 'again') continue;
     const ncode = novel.ncode.toLowerCase();
-    // never open the browser: the link sits in step 1 so the user reads the steps and opens it
+    // never open the browser: the link sits in step 1 so the user reads the steps (and why) and opens it
     const link = styleText(['cyan', 'underline', 'bold'], infotopUrl(ncode));
     p.note(t.steps(home(DIR), link, process.platform === 'darwin' ? '⌘' : 'Ctrl'), t.howTo);
     const file = await waitForPdf(ncode);
     if (!file) continue;
+    p.log.step(t.stepConvert);
     const bar = p.progress({ max: 100 });
     bar.start(t.converting);
     let shown = 0;
     try {
       const r = await convertFile(file, (i, n) => {
         const pct = Math.floor((i / n) * 100);
-        if (pct > shown) { bar.advance(pct - shown, `${t.converting} ${pct}%`); shown = pct; }
+        if (pct > shown) { bar.advance(pct - shown, t.reading(i, n)); shown = pct; }
       });
       bar.stop(t.done(home(r.out), r.chapters));
     } catch (e) {

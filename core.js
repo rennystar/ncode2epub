@@ -275,6 +275,7 @@ export async function convert(doc, onProgress = () => {}) {
     pages.push(await parsePage(page, bold));
     page.cleanup();
     onProgress(i, doc.numPages);
+    await new Promise(setImmediate);   // pdf.js only queues microtasks; yield so a progress UI can repaint
   }
   const sections = buildSections(pages);
   if (sections[0]?.[0] !== '注意事項') throw new Error('unexpected 縦書きPDF layout (no 注意事項 page)');

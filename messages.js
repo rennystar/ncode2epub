@@ -19,22 +19,23 @@ export const MESSAGES = {
     again: '検索し直す',
     quit: '終了',
     split: (w) => `キーワードを分けて検索しました：${w.join('、')}`,
-    why: `サイトの利用規約（第14条23号）により、公式API以外での自動アクセスは禁止されています。
-そのため、縦書きPDFはご自身でダウンロードしてください。
-このツールが自動で行うのは、作品の検索とPDFの変換だけです。`,
+    stepSearch: '1/3 作品検索',
     noDir: (d) => `フォルダが見つかりません：${d}（--dirで指定してください）`,
-    howTo: '縦書きPDFのダウンロード方法',
-    steps: (dir, link, k) => `1. 下のリンクを開きます（${k}キーを押しながらクリック）。
+    howTo: '2/3 縦書きPDFのダウンロード',
+    steps: (dir, link, k) => `サイトの規約により、縦書きPDFは手動でダウンロードする必要があります。
+
+1. 下のリンクを開きます（${k}キーを押しながらクリック）。
    ${link}
    ページのいちばん下までスクロールします。
-2. 「+注意+」の枠のすぐ下にある「作者マイページ ｜ 縦書きPDF ｜ 情報提供」から、
-   「縦書きPDF」をクリックします。
+2. 「+注意+」の枠のすぐ下にある「縦書きPDF」をクリックします。
 3. PDFが ${dir} に保存されると、自動でEPUBに変換されます。
    ブラウザでPDFが開いた場合は、保存ボタンからダウンロードしてください。
 Escキーで検索に戻ります。`,
     waiting: (dir) => `${dir} にPDFが届くのを待っています`,
     received: (f) => `PDFを検出しました：${f}`,
+    stepConvert: '3/3 EPUBに変換',
     converting: '変換中',
+    reading: (i, n) => `ページを読み込み中 ${i}/${n}`,
     done: (out, n) => `変換が完了しました：${out}（${n}話）`,
     more: '他の作品も変換しますか？',
     yes: 'はい',
@@ -57,7 +58,7 @@ Escキーで検索に戻ります。`,
 
   Options: --dir <folder> (default ~/Downloads)  --lang ja|en|ko`,
     ep: (n) => `${n} ep.`,
-    query: 'Search a novel (title, author, N-code, URL or romaji)',
+    query: 'Type a title, author, N-code, URL or romaji',
     searching: 'Searching',
     found: (n, all) => `${n} of ${all}`,
     none: 'No novels found.',
@@ -66,22 +67,23 @@ Escキーで検索に戻ります。`,
     again: 'Search again',
     quit: 'Quit',
     split: (w) => `No exact match, so searched 「${w.join('」「')}」 separately`,
-    why: `You download the 縦書きPDF yourself.
-小説家になろう's Terms of Use (Art. 14 item 23) forbid automated access other than the official API,
-so this tool automates only the search and the conversion of the PDF you download.`,
+    stepSearch: '1/3 Search',
     noDir: (d) => `Folder not found: ${d} (set one with --dir)`,
-    howTo: 'How to get the 縦書きPDF',
-    steps: (dir, link, k) => `1. Open the link below (${k}-click).
+    howTo: '2/3 Download the 縦書きPDF',
+    steps: (dir, link, k) => `Under the site's terms, the 縦書きPDF has to be downloaded by hand.
+
+1. Open the link below (${k}-click).
    ${link}
    Scroll to the very bottom of the page.
-2. Below the 「+注意+」 box, in the row 「作者マイページ ｜ 縦書きPDF ｜ 情報提供」,
-   click the middle one: 「縦書きPDF」.
-3. As soon as the PDF is saved to ${dir}, it is converted to EPUB.
+2. Click 「縦書きPDF」 just below the 「+注意+」 box.
+3. When the PDF is saved to ${dir}, it is converted right away.
    If the browser shows the PDF instead, save it with the viewer's download button.
 Press Esc to go back to search.`,
     waiting: (dir) => `Waiting for the PDF in ${dir}`,
     received: (f) => `Received: ${f}`,
+    stepConvert: '3/3 Convert to EPUB',
     converting: 'Converting',
+    reading: (i, n) => `Reading page ${i} of ${n}`,
     done: (out, n) => `Done: ${out} (${n} episodes)`,
     more: 'Convert another novel?',
     yes: 'Yes',
@@ -113,22 +115,23 @@ Press Esc to go back to search.`,
     again: '다시 검색',
     quit: '종료',
     split: (w) => `검색어를 나누어 다시 검색했습니다: ${w.join(', ')}`,
-    why: `사이트 이용규약(제14조 23호)에 따라 공식 API 외의 자동 접근은 금지되어 있습니다.
-그래서 縦書きPDF는 직접 다운로드해야 합니다.
-이 도구가 자동으로 하는 일은 작품 검색과 PDF 변환뿐입니다.`,
+    stepSearch: '1/3 작품 검색',
     noDir: (d) => `폴더를 찾을 수 없습니다: ${d} (--dir로 지정해 주세요)`,
-    howTo: '縦書きPDF 다운로드 방법',
-    steps: (dir, link, k) => `1. 아래 링크를 엽니다 (${k} 키를 누른 채 클릭).
+    howTo: '2/3 縦書きPDF 다운로드',
+    steps: (dir, link, k) => `縦書きPDF는 사이트 규약에 따라 직접 다운로드해야 합니다.
+
+1. 아래 링크를 엽니다 (${k} 키를 누른 채 클릭).
    ${link}
    페이지 맨 아래로 스크롤합니다.
-2. 「+注意+」 상자 바로 아래의 「作者マイページ ｜ 縦書きPDF ｜ 情報提供」에서
-   「縦書きPDF」를 클릭합니다.
+2. 「+注意+」 상자 바로 아래의 「縦書きPDF」를 클릭합니다.
 3. PDF가 ${dir}에 저장되면 자동으로 EPUB으로 변환됩니다.
    브라우저에서 PDF가 열리면 저장 버튼을 눌러 다운로드하세요.
 Esc 키를 누르면 검색으로 돌아갑니다.`,
     waiting: (dir) => `${dir}에 PDF가 들어오기를 기다리는 중`,
     received: (f) => `PDF를 감지했습니다: ${f}`,
+    stepConvert: '3/3 EPUB 변환',
     converting: '변환 중',
+    reading: (i, n) => `페이지 읽는 중 ${i}/${n}`,
     done: (out, n) => `변환 완료: ${out} (${n}화)`,
     more: '다른 작품도 변환할까요?',
     yes: '예',
